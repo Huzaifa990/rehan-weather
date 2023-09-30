@@ -3,6 +3,8 @@ import forecastImage from '../Images/forecast.png';
 import weatherIcon from '../Images/search.png';
 import Clock from 'react-live-clock';
 import moment from 'moment/moment';
+import Api from "../Config/config";
+
 export default function Forcast() {
 
     var [forecast, setForecast] = useState({});
@@ -13,7 +15,7 @@ export default function Forcast() {
         async function getData(){
             if(city !== ""){
               setErr(false);
-              var response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=ca8c2c7970a09dc296d9b3cfc4d06940`)
+              var response = await fetch(`${Api.apiName}q=${city}&units=metric&appid=${Api.apiKey}`)
               var data = await response.json();
               console.log(data);
               setForecast(data);
@@ -24,7 +26,7 @@ export default function Forcast() {
                 navigator.geolocation.getCurrentPosition(
                   async (pos)=>{
                     setErr(false);
-                    var res2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&id=524901&appid=ca8c2c7970a09dc296d9b3cfc4d06940`);
+                    var res2 = await fetch(`${Api.apiName}lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&id=524901&appid=${Api.apiKey}`);
                     var data2 = await res2.json();
                     setForecast(data2);
                   },
